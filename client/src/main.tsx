@@ -12,4 +12,3 @@ createRoot(document.getElementById("root")!).render(
     </GoogleOAuthProvider>
   </StrictMode>,
 );
-console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID);

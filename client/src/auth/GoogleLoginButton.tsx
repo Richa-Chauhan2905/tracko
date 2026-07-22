@@ -11,7 +11,6 @@ export default function GoogleLoginButton() {
 
     localStorage.setItem("token", response.data.token);
     navigate("/driver");
-    console.log(response.data.user);
   }
 
   return (
@@ -22,7 +21,7 @@ export default function GoogleLoginButton() {
         }
       }}
       onError={() => {
-        console.log("Login failed");
+        // Ignore failed Google login attempts silently.
       }}
     />
   );
