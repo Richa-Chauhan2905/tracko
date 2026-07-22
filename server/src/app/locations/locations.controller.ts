@@ -1,6 +1,9 @@
 import type { Request, Response } from "express";
-
+import { db } from "../../db/index.js";
+import { locations } from "../../db/schema.js";
 import { createLocation } from "./locations.services.js";
+import { eq, desc } from "drizzle-orm";
+import { trips, users } from "../../db/schema.js";
 
 export async function addLocation(req: Request, res: Response) {
   try {
@@ -36,6 +39,30 @@ export async function addLocation(req: Request, res: Response) {
 
     return res.status(500).json({
       message: "Location failed",
+    });
+  }
+}
+
+export async function currentLocation(req: Request, res: Response) {
+  try {
+    const latestLocation = await db
+      .select()
+      .from(locations)
+      .orderBy(desc(locations.recordedAt))
+      .limit(1);
+
+    if (!latestLocation.length) {
+      return res.status(404).json({
+        message: "No location found",
+      });
+    }
+
+    return res.json(latestLocation[0]);
+  } catch (error) {
+    console.error("CURRENT LOCATION ERROR:", error);
+
+    return res.status(500).json({
+      message: "Failed to get location",
     });
   }
 }

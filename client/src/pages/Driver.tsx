@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/api.js";
+import Map from "../components/Map";
 
 export default function Driver() {
   const [tripId, setTripId] = useState<string | null>(null);
@@ -9,7 +10,6 @@ export default function Driver() {
     longitude: number;
   } | null>(null);
 
-
   async function startTrip() {
     try {
       const response = await api.post("/trips/start");
@@ -17,12 +17,10 @@ export default function Driver() {
       console.log("Trip started:", response.data);
 
       setTripId(response.data.trip.id);
-
     } catch (error) {
       console.error("Failed to start trip", error);
     }
   }
-
 
   useEffect(() => {
     if (!tripId) return;
@@ -36,7 +34,6 @@ export default function Driver() {
           longitude,
         });
 
-
         try {
           await api.post("/locations", {
             tripId,
@@ -46,12 +43,8 @@ export default function Driver() {
           });
 
           console.log("Location sent");
-
         } catch (error) {
-          console.error(
-            "Failed to send location",
-            error
-          );
+          console.error("Failed to send location", error);
         }
       },
 
@@ -63,43 +56,28 @@ export default function Driver() {
         enableHighAccuracy: true,
         maximumAge: 0,
         timeout: 10000,
-      }
+      },
     );
-
 
     return () => {
       navigator.geolocation.clearWatch(watchId);
     };
-
   }, [tripId]);
-
 
   return (
     <div>
       <h1>Driver Tracking</h1>
 
-      {!tripId && (
-        <button onClick={startTrip}>
-          Start Trip
-        </button>
-      )}
-
-      {tripId && (
-        <p>
-          Active Trip: {tripId}
-        </p>
-      )}
+      {!tripId && <button onClick={startTrip}>Start Trip</button>}
 
       {location && (
-        <div>
-          <p>
-            Latitude: {location.latitude}
-          </p>
+        <>
+          <p>Latitude: {location.latitude}</p>
 
-          <p>
-            Longitude: {location.longitude}
-          </p>
-        </div>
+          <p>Longitude: {location.longitude}</p>
+
+          <Map latitude={location.latitude} longitude={location.longitude} />
+        </>
       )}
     </div>
   );
