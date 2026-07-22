@@ -5,9 +5,10 @@ import "leaflet/dist/leaflet.css";
 type Props = {
   latitude: number;
   longitude: number;
+  name: string;
 };
 
-export default function Map({ latitude, longitude }: Props) {
+export default function Map({ latitude, longitude, name }: Props) {
   return (
     <MapContainer
       center={[latitude, longitude]}
@@ -17,7 +18,11 @@ export default function Map({ latitude, longitude }: Props) {
       <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
       <Marker position={[latitude, longitude]}>
-        <Popup>Current Location</Popup>
+        <Popup>
+          <strong>{name}</strong>
+          <br />
+          Current Location
+        </Popup>
       </Marker>
     </MapContainer>
   );

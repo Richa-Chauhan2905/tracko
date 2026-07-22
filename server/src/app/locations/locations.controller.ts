@@ -46,8 +46,17 @@ export async function addLocation(req: Request, res: Response) {
 export async function currentLocation(req: Request, res: Response) {
   try {
     const latestLocation = await db
-      .select()
+      .select({
+        latitude: locations.latitude,
+        longitude: locations.longitude,
+        accuracy: locations.accuracy,
+        recordedAt: locations.recordedAt,
+        name: users.name,
+        profilePicture: users.profilePicture,
+      })
       .from(locations)
+      .innerJoin(trips, eq(locations.tripId, trips.id))
+      .innerJoin(users, eq(trips.userId, users.id))
       .orderBy(desc(locations.recordedAt))
       .limit(1);
 

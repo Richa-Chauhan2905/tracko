@@ -5,6 +5,8 @@ import Map from "../components/Map";
 export default function Driver() {
   const [tripId, setTripId] = useState<string | null>(null);
 
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
   const [location, setLocation] = useState<{
     latitude: number;
     longitude: number;
@@ -76,7 +78,11 @@ export default function Driver() {
 
           <p>Longitude: {location.longitude}</p>
 
-          <Map latitude={location.latitude} longitude={location.longitude} />
+          <Map
+            latitude={location.latitude}
+            longitude={location.longitude}
+            name={user.name}
+          />
         </>
       )}
     </div>

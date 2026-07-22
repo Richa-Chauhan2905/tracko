@@ -6,6 +6,7 @@ export default function Tracker() {
   const [location, setLocation] = useState<{
     latitude: number;
     longitude: number;
+    name: string;
   } | null>(null);
 
   useEffect(() => {
@@ -18,6 +19,7 @@ export default function Tracker() {
         setLocation({
           latitude: response.data.latitude,
           longitude: response.data.longitude,
+          name: response.data.name,
         });
       } catch (error) {
         console.error("Failed to get location", error);
@@ -42,7 +44,11 @@ export default function Tracker() {
           <p>Lat: {location.latitude}</p>
           <p>Lng: {location.longitude}</p>
 
-          <Map latitude={location.latitude} longitude={location.longitude} />
+          <Map
+            latitude={location.latitude}
+            longitude={location.longitude}
+            name={location.name}
+          />
         </>
       )}
     </div>
