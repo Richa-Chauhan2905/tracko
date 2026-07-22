@@ -32,10 +32,10 @@ export async function addLocation(req: Request, res: Response) {
       location,
     });
   } catch (error) {
-    console.error(error);
+    console.error("LOCATION ERROR:", error);
 
     return res.status(500).json({
-      message: "Failed to add location",
+      message: "Location failed",
     });
   }
 }
