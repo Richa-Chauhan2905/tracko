@@ -1,0 +1,54 @@
+/* Driver.css */
+
+.driver-page {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+/* Loading overlay */
+.driver-loading {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #0f172a;
+}
+
+/* Floating Start Trip button */
+.driver-start-btn {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.5rem;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    transition: background 0.15s, transform 0.15s;
+}
+
+.driver-start-btn:hover {
+    background: #1d4ed8;
+}
+
+.driver-start-btn:active {
+    transform: translateX(-50%) scale(0.97);
+}
+
+.driver-start-btn svg {
+    width: 1rem;
+    height: 1rem;
+}
